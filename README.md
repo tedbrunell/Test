@@ -1,8 +1,12 @@
-testing is fun!
-
 # Tic-Tac-Toe
 
-This is a simple Tic-Tac-Toe game implemented in Python.
+A simple Tic-Tac-Toe game implemented in Python using the `tkinter` library for a GUI.
 
-## How to play
-Run the `tic_tac_toe.py` file using Python: `python tic_tac_toe.py`. Players take turns entering the row and column (0-2) to place their mark ('X' or 'O'). The first player to get three in a row wins!
+## How to Run
+
+1. Make sure you have Python installed.
+2. Run the following command:
+   ```bash
+   python tic_tac_toe.py
+   ```
+3. A window will pop up. Click on the buttons to place your 'X' or 'O'.
