@@ -1,3 +1,1 @@
 testing
-
-tic-tac-toe
