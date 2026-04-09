@@ -1,40 +1,42 @@
+import tkinter as tk
+from tkinter import messagebox
 
-def print_board(board):
-    for row in board:
-        print(" | ".join(row))
-        print("-" * 9)
+class TicTacToe:
+    def __init__(self):
+        self.window = tk.Tk()
+        self.window.title("Tic-Tac-Toe")
+        self.turn = 'X'
+        self.board = [['' for _ in range(3)] for _ in range(3)]
+        self.buttons = [[None for _ in range(3)] for _ in range(3)]
 
-def check_winner(board):
-    for row in board:
-        if row[0] == row[1] == row[2] != " ":
-            return row[0]
-    for col in range(3):
-        if board[0][col] == board[1][col] == board[2][col] != " ":
-            return board[0][col]
-    if board[0][0] == board[1][1] == board[2][2] != " ":
-        return board[0][0]
-    if board[0][2] == board[1][1] == board[2][0] != " ":
-        return board[0][2]
-    return None
+        for i in range(3):
+            for j in range(3):
+                self.buttons[i][j] = tk.Button(self.window, text='', font=('normal', 20), width=5, height=2,
+                                              command=lambda r=i, c=j: self.on_click(r, c))
+                self.buttons[i][j].grid(row=i, column=j)
 
-def tic_tac_toe():
-    board = [[" " for _ in range(3)] for _ in range(3)]
-    player = "X"
-    for _ in range(9):
-        print_board(board)
-        row = int(input(f"Player {player}, enter row (0-2): "))
-        col = int(input(f"Player {player}, enter col (0-2): "))
-        if board[row][col] == " ":
-            board[row][col] = player
-            winner = check_winner(board)
-            if winner:
-                print_board(board)
-                print(f"Player {winner} wins!")
-                return
-            player = "O" if player == "X" else "X"
-        else:
-            print("Cell occupied!")
-    print("It's a draw!")
+        self.window.mainloop()
 
-if __name__ == "__main__":
-    tic_tac_toe()
+    def on_click(self, r, c):
+        if self.board[r][c] == '' and not self.check_winner():
+            self.board[r][c] = self.turn
+            self.buttons[r][c].config(text=self.turn)
+            if self.check_winner():
+                messagebox.showinfo("Tic-Tac-Toe", f"Player {self.turn} wins!")
+                self.window.destroy()
+            elif all(self.board[i][j] != '' for i in range(3) for j in range(3)):
+                messagebox.showinfo("Tic-Tac-Toe", "It's a draw!")
+                self.window.destroy()
+            else:
+                self.turn = 'O' if self.turn == 'X' else 'X'
+
+    def check_winner(self):
+        for i in range(3):
+            if self.board[i][0] == self.board[i][1] == self.board[i][2] != '': return True
+            if self.board[0][i] == self.board[1][i] == self.board[2][i] != '': return True
+        if self.board[0][0] == self.board[1][1] == self.board[2][2] != '': return True
+        if self.board[0][2] == self.board[1][1] == self.board[2][0] != '': return True
+        return False
+
+if __name__ == '__main__':
+    TicTacToe()
